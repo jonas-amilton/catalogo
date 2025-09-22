@@ -90,3 +90,12 @@ e no terminal
 `tail -f storage/logs/laravel.log`
 
 Observação: meu teste local consistiu em rodar php artisan queue:work e verificar que os e‑mails gerados pelos jobs aparecem no log
+
+Credenciais
+
+````
+admin@example.com
+password
+cliente@example.com
+password
+````
