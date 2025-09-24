@@ -8,16 +8,18 @@
                 class="font-medium">R${{ number_format($product->price, 2, ',', '.') }}</span></p>
         <p class="text-gray-700 mb-6">Estoque: <span id="product-stock" class="font-medium">{{ $product->stock }}</span></p>
 
-        <div class="mb-4 max-w-xs">
-            <label for="qty" class="block text-sm font-medium text-gray-700 mb-1">Quantidade</label>
-            <input type="number" id="qty" min="1" max="{{ $product->stock }}" value="1"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-        </div>
+        @guest
+            <div class="mb-4 max-w-xs">
+                <label for="qty" class="block text-sm font-medium text-gray-700 mb-1">Quantidade</label>
+                <input type="number" id="qty" min="1" max="{{ $product->stock }}" value="1"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
 
-        <button id="add-to-cart" data-product-id="{{ $product->id }}" @if ($product->stock <= 0) disabled @endif
-            class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">
-            Adicionar ao Carrinho
-        </button>
+            <button id="add-to-cart" data-product-id="{{ $product->id }}" @if ($product->stock <= 0) disabled @endif
+                class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">
+                Adicionar ao Carrinho
+            </button>
+        @endguest
     </div>
 @endsection
 
@@ -69,8 +71,8 @@
             $(document).on('click', '#add-to-cart', function(e) {
                 e.preventDefault();
 
-                const $btn = $(this);
-                const productId = $btn.data('product-id');
+                const btn = $(this);
+                const productId = btn.data('product-id');
                 const quantity = parseInt($('#qty').val()) || 1;
 
                 if (quantity < 1) {
@@ -79,8 +81,8 @@
                     return;
                 }
 
-                if ($btn.prop('disabled')) return;
-                $btn.prop('disabled', true).addClass('opacity-60 cursor-not-allowed');
+                if (btn.prop('disabled')) return;
+                btn.prop('disabled', true).addClass('opacity-60 cursor-not-allowed');
 
                 $.ajax({
                     url: '{{ route('cart.add') }}',
@@ -114,7 +116,7 @@
                         else alert(msg);
                     },
                     complete: function() {
-                        $btn.prop('disabled', false).removeClass(
+                        btn.prop('disabled', false).removeClass(
                             'opacity-60 cursor-not-allowed');
                     }
                 });
