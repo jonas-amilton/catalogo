@@ -42,7 +42,7 @@
 
                     @can('viewAny', App\Models\Order::class)
                         <x-nav-link :href="route('admin.orders.index')" :active="request()->routeIs('admin.orders.index')">
-                            {{ __('Admin Orders') }}
+                            {{ __('Admin Ordens') }}
                         </x-nav-link>
                     @endcan
                 </div>
@@ -133,7 +133,7 @@
 
             @can('viewAny', App\Models\Order::class)
                 <x-responsive-nav-link :href="route('admin.orders.index')" :active="request()->routeIs('admin.orders.index')">
-                    {{ __('Admin Orders') }}
+                    {{ __('Admin Ordens') }}
                 </x-responsive-nav-link>
             @endcan
         </div>
