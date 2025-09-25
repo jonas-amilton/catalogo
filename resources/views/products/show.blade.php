@@ -8,7 +8,7 @@
                 class="font-medium">R${{ number_format($product->price, 2, ',', '.') }}</span></p>
         <p class="text-gray-700 mb-6">Estoque: <span id="product-stock" class="font-medium">{{ $product->stock }}</span></p>
 
-        @guest
+        @can('viewCart', App\Models\Order::class)
             <div class="mb-4 max-w-xs">
                 <label for="qty" class="block text-sm font-medium text-gray-700 mb-1">Quantidade</label>
                 <input type="number" id="qty" min="1" max="{{ $product->stock }}" value="1"
@@ -19,7 +19,7 @@
                 class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">
                 Adicionar ao Carrinho
             </button>
-        @endguest
+        @endcan
     </div>
 @endsection
 

@@ -16,16 +16,18 @@ class OrderPolicy
         return $user->role === 'admin';
     }
 
+
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Order $order): bool
+    public function view(User $user): bool
     {
-        if ($user->role === 'admin') {
-            return true;
-        }
+        return $user->role === 'admin' || $user->role === 'customer';
+    }
 
-        return $order->user_id === $user->id;
+    public function viewCart(?User $user): bool
+    {
+        return $user !== null && $user->role === 'customer';
     }
 
     public function viewOwnList(User $user): bool

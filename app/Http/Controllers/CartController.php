@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CartAddRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CartController extends Controller
 {
+    use AuthorizesRequests;
+
     public function add(CartAddRequest $request)
     {
+        $this->authorize('viewCart', \App\Models\Order::class);
+
         $product = Product::findOrFail($request->product_id);
 
         if ($request->quantity > $product->stock) {
@@ -41,6 +46,8 @@ class CartController extends Controller
 
     public function index()
     {
+        $this->authorize('viewCart', \App\Models\Order::class);
+
         $cart = session()->get('cart', ['items' => [], 'total' => 0, 'count' => 0]);
 
         return view('cart.index', compact('cart'));
@@ -48,12 +55,16 @@ class CartController extends Controller
 
     public function show()
     {
+        $this->authorize('viewCart', \App\Models\Order::class);
+
         $cart = session()->get('cart', ['items' => [], 'total' => 0, 'count' => 0]);
         return response()->json($cart);
     }
 
     public function update(Request $request, $productId)
     {
+        $this->authorize('viewCart', \App\Models\Order::class);
+
         $qty = (int) $request->input('quantity', 1);
         $product = Product::findOrFail($productId);
 
@@ -82,6 +93,8 @@ class CartController extends Controller
 
     public function remove($productId)
     {
+        $this->authorize('viewCart', \App\Models\Order::class);
+
         $cart = session()->get('cart', ['items' => [], 'total' => 0, 'count' => 0]);
 
         if (isset($cart['items'][$productId])) {
@@ -91,19 +104,6 @@ class CartController extends Controller
         }
 
         return response()->json(['total' => $cart['total'], 'items_count' => $cart['count'], 'cart' => $cart]);
-    }
-
-    public function checkout(Request $request)
-    {
-        $cart = session()->get('cart', ['items' => [], 'total' => 0, 'count' => 0]);
-
-        if ($cart['count'] === 0) {
-            return response()->json(['message' => 'Cart is empty'], 422);
-        }
-
-        session()->forget('cart');
-
-        return response()->json(['message' => 'Checkout finalizado com sucesso']);
     }
 
     protected function recalculateCart(array &$cart)

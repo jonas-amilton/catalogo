@@ -14,7 +14,7 @@
                         {{ __('Produtos') }}
                     </x-nav-link>
 
-                    @guest
+                    @can('viewCart', App\Models\Order::class)
                         <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
                             {{ __('Carrinho') }}
                             <span class="cart-count-badge-container inline-block">
@@ -27,12 +27,10 @@
                             </span>
                         </x-nav-link>
 
-                        @auth
-                            <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
-                                {{ __('Meus Pedidos') }}
-                            </x-nav-link>
-                        @endauth
-                    @endguest
+                        <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
+                            {{ __('Meus Pedidos') }}
+                        </x-nav-link>
+                    @endcan
 
                     @can('viewAny', App\Models\Product::class)
                         <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')">
@@ -105,7 +103,7 @@
                 {{ __('Produtos') }}
             </x-responsive-nav-link>
 
-            @guest
+            @can('viewCart', App\Models\Order::class)
                 <x-responsive-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
                     {{ __('Carrinho') }}
                     <span class="cart-count-badge-container inline-block">
@@ -118,12 +116,10 @@
                     </span>
                 </x-responsive-nav-link>
 
-                @auth
-                    <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
-                        {{ __('Meus Pedidos') }}
-                    </x-responsive-nav-link>
-                @endauth
-            @endguest
+                <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
+                    {{ __('Meus Pedidos') }}
+                </x-responsive-nav-link>
+            @endcan
 
             @can('viewAny', App\Models\Product::class)
                 <x-responsive-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')">
