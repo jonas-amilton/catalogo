@@ -12,6 +12,12 @@ class ProductController extends Controller
 {
     use AuthorizesRequests;
 
+    public function index()
+    {
+        $this->authorize('index', Product::class);
+        return view('admin.products.index');
+    }
+
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
@@ -21,7 +27,7 @@ class ProductController extends Controller
     public function create()
     {
         $this->authorize('create', Product::class);
-        return view('products.create');
+        return view('admin.products.create');
     }
 
     public function store(ProductStoreRequest $request)
@@ -45,7 +51,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $this->authorize('update', $product);
-        return view('products.edit', compact('product'));
+        return view('admin.products.edit', compact('product'));
     }
 
     public function update(ProductUpdateRequest $request, Product $product)
