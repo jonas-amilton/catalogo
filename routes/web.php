@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\{
+    CartController,
+    ProductController,
+    OrderController
+};
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,9 +26,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('products', fn() => view('admin.products.index'))->name('products.index');
-    Route::get('products/create', fn() => view('admin.products.create'))->name('products.create');
-    Route::get('products/{product}/edit', fn(\App\Models\Product $product) => view('admin.products.edit', compact('product')))->name('products.edit');
+    Route::get('products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
     Route::post('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.status');
 });
