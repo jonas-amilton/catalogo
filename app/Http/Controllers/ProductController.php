@@ -18,12 +18,6 @@ class ProductController extends Controller
         return view('admin.products.index');
     }
 
-    public function show($slug)
-    {
-        $product = Product::where('slug', $slug)->firstOrFail();
-        return view('products.show', compact('product'));
-    }
-
     public function create()
     {
         $this->authorize('create', Product::class);
