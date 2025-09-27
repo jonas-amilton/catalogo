@@ -5,6 +5,7 @@ use App\Http\Controllers\{
     ProductController,
     OrderController
 };
+use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,7 +14,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/products', fn() => view('products.index'))->name('products.index');
+    Route::get('/products', [CustomerProductController::class, 'index'])->name('products.index');
     Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
