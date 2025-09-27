@@ -11,9 +11,13 @@ class ProductPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user, string $context = 'admin'): bool
     {
-        return $user->role === 'admin';
+        return match ($context) {
+            'admin' => $user->role === 'admin',
+            'customer' => in_array($user->role, ['customer', 'admin']),
+            default => false,
+        };
     }
 
     /**
