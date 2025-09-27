@@ -17,4 +17,12 @@ class ProductController extends Controller
 
         return view('products.index');
     }
+
+    public function show(string $slug)
+    {
+        $this->authorize('viewAny', [Product::class, 'customer']);
+
+        $product = Product::where('slug', $slug)->firstOrFail();
+        return view('products.show', compact('product'));
+    }
 }

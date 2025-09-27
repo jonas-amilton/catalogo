@@ -15,7 +15,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/products', [CustomerProductController::class, 'index'])->name('products.index');
-    Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+    Route::get('/product/{slug}', [CustomerProductController::class, 'show'])->name('products.show');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::get('/cart/show', [CartController::class, 'show'])->name('cart.show');
