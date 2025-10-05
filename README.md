@@ -1,5 +1,3 @@
-# Teste Técnico — Desenvolvedor Full Stack PHP / Laravel
-
 Este repositório contém uma aplicação de e‑commerce simples construída com Laravel 12, Livewire v3, Blade e Tailwind CSS. O objetivo do projeto é demonstrar conhecimentos em PHP, Laravel, Livewire, policies, Jobs, Mailables, testes e boas práticas.
 
 ### Pré-requisitos
